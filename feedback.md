@@ -36,7 +36,7 @@ class Creature {
 ```
 * allows implicit conversions -2
 *  default health and strength -2
-* uses <array> -20
+* uses \<array> -20
 * waste of time – call to max function ; health= health – (damage>health? 0: damage); -1
 * excessive use of printf/cout/cin/ file stream/stringstream and/or endl and/or << >>; applies to all output not just menu-5
 //e.g.
