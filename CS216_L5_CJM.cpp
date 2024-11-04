@@ -27,26 +27,32 @@ private:
     int health;
 
 public:
-    Creature(const string& name = "", const string& type = "", int strength = 0, int health = 0)
-        : name(name), type(type), strength(strength), health(health) {}
-
-    void setCreature(const string& name, const string& type, int strength, int health) {
-        this->name = name; this->type = type; this->strength = strength; this->health = health;
+    Creature(const string& name = "", const string& type = "", int strength = 0, int health = 0) {
+        setCreature(name, type, strength, health);
     }
 
-    void takeDamage(int damage) { health = max(0, health - damage); }
+    void setCreature(const string& name, const string& type, int strength, int health) {
+        this->name = name;
+        this->type = type;
+        this->strength = strength;
+        this->health = health;
+    }
+
+    void takeDamage(int damage) {
+        health = max(0, health - damage);
+    }
     bool isAlive() const { return health > 0; }
 
     string toString() const {
         stringstream ss;
         ss << left << setw(20) << name << left << setw(15) << type
-           << right << setw(10) << strength << right << setw(10) << health;
+            << right << setw(10) << strength << right << setw(10) << health;
         return ss.str();
     }
 
     int getStrength() const { return strength; }
     int getHealth() const { return health; }
-    const string& getName() const { return name; }  
+    const string& getName() const { return name; }
 };
 
 // Army class
@@ -67,16 +73,16 @@ public:
 
         for (int i = 0; i < size; i++) {
             creatures[i] = Creature(creatureNames[i], creatureTypes[rand() % 4],
-                                     rand() % 50 + 1, rand() % 100 + 1);
+                rand() % 50 + 1, rand() % 100 + 1);
         }
     }
 
     void printArmyDetails() const {
         cout << left << setw(20) << "Name" << left << setw(15) << "Type"
-             << right << setw(10) << "Strength" << right << setw(10) << "Health" << endl;
+            << right << setw(10) << "Strength" << right << setw(10) << "Health\n";
 
         for (int i = 0; i < size; i++)
-            cout << creatures[i].toString() << endl;
+            cout << creatures[i].toString() << '\n';
     }
 
     int getTotalHealth() const {
@@ -102,11 +108,11 @@ public:
         : army1(name1, size1), army2(name2, size2) {}
 
     void battle() {
-        cout << "Battle begins between " << army1.getName() << " and " << army2.getName() << "!" << endl;
+        cout << "Battle begins between " << army1.getName() << " and " << army2.getName() << "!\n";
 
-        //Battle output
-        cout << left << setw(20) << "Attacker" << setw(10) << "Damage" << setw(10) << "Army" 
-             << setw(20) << "Defender" << setw(20) << "Defender's Health" << setw(10) << "Army" << endl;
+        // Battle output
+        cout << left << setw(20) << "Attacker" << setw(10) << "Damage" << setw(10) << "Army"
+            << setw(20) << "Defender" << setw(20) << "Defender's Health" << setw(10) << "Army\n";
 
         for (int i = 0; i < army1.getSize(); i++) {
             Creature& creature1 = army1.getCreature(i);
@@ -116,41 +122,41 @@ public:
                 // Creature 1 attacks Creature 2
                 int damage1 = creature1.getStrength();
                 creature2.takeDamage(damage1);
-                cout << left << setw(20) << creature1.getName() 
-                     << setw(10) << damage1 
-                     << setw(10) << army1.getName() 
-                     << setw(20) << creature2.getName() 
-                     << setw(20) << creature2.getHealth() 
-                     << setw(10) << army2.getName() << endl;
+                cout << left << setw(20) << creature1.getName()
+                    << setw(10) << damage1
+                    << setw(10) << army1.getName()
+                    << setw(20) << creature2.getName()
+                    << setw(20) << creature2.getHealth()
+                    << setw(10) << army2.getName() << '\n';
 
                 if (!creature2.isAlive()) break;
 
                 // Creature 2 attacks Creature 1
                 int damage2 = creature2.getStrength();
                 creature1.takeDamage(damage2);
-                cout << left << setw(20) << creature2.getName() 
-                     << setw(10) << damage2 
-                     << setw(10) << army2.getName() 
-                     << setw(20) << creature1.getName() 
-                     << setw(20) << creature1.getHealth() 
-                     << setw(10) << army1.getName() << endl;
+                cout << left << setw(20) << creature2.getName()
+                    << setw(10) << damage2
+                    << setw(10) << army2.getName()
+                    << setw(20) << creature1.getName()
+                    << setw(20) << creature1.getHealth()
+                    << setw(10) << army1.getName() << '\n';
             }
 
-            if (!creature1.isAlive()) cout << creature1.getName() << " has been defeated!" << endl;
-            if (!creature2.isAlive()) cout << creature2.getName() << " has been defeated!" << endl;
+            if (!creature1.isAlive()) cout << creature1.getName() << " has been defeated!\n";
+            if (!creature2.isAlive()) cout << creature2.getName() << " has been defeated!\n";
         }
 
-        //Health of each army
-        cout << endl << army1.getName() << " total health: " << army1.getTotalHealth() << endl;
-        cout << army2.getName() << " total health: " << army2.getTotalHealth() << endl;
+        // Health of each army
+        cout << "\n" << army1.getName() << " total health: " << army1.getTotalHealth() << '\n';
+        cout << army2.getName() << " total health: " << army2.getTotalHealth() << '\n';
 
         // Winner
         if (army1.getTotalHealth() > army2.getTotalHealth())
-            cout << army1.getName() << " wins!" << endl;
+            cout << army1.getName() << " wins!\n";
         else if (army2.getTotalHealth() > army1.getTotalHealth())
-            cout << army2.getName() << " wins!" << endl;
+            cout << army2.getName() << " wins!\n";
         else
-            cout << "It's a tie!" << endl;
+            cout << "It's a tie!\n";
     }
 };
 
@@ -175,8 +181,9 @@ void playGame() {
     if (armySize1 <= MAX_CREATURES && armySize2 <= MAX_CREATURES) {
         Game game(armyName1, armySize1, armyName2, armySize2);
         game.battle();
-    } else {
-        cout << "Army sizes must be less than or equal to " << MAX_CREATURES << "." << endl;
+    }
+    else {
+        cout << "Army sizes must be less than or equal to " << MAX_CREATURES << ".\n";
     }
 }
 
@@ -190,7 +197,7 @@ int main() {
         if (choice == PLAY) playGame();
     } while (choice != QUIT);
 
-    cout << "Quitting the game." << endl;
+    cout << "Quitting the game.\n";
     return 0;
 }
 
